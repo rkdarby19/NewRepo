@@ -5,6 +5,10 @@ spots = [ 0,0,0,1,0,0,0,1,0,0,0,2,
 	  3,3,3,3,3,3,3,3,3,3,3,2,
 	  0,0,0,1,0,0,0,1,0,0,0,2,
 	  0,0,0,1,0,0,0,1,0,0,0,2 ]
+
+player_spots = [ 0,0,0,
+		 0,0,0,
+		 0,0,0 ]
 # Indexes for x's or o's: 13, 17, 21,
 #			  37, 41, 45,
 # 			  61, 65, 69
@@ -17,11 +21,14 @@ spots = [ 0,0,0,1,0,0,0,1,0,0,0,2,
 #   |   |
 #   |   |
 #
+
 def fillSpot(letter, quadrant):
 	if letter == 'x':
 		choice = 4
+		player_spots[quadrant-1] = 1
 	else:
-		choice = 5
+		choice = 5 
+		player_spots[quadrant-1] = 2
 
 	if quadrant == 1:
 		spots[13] = choice
@@ -58,8 +65,26 @@ def printBoard():
 		else:
 			print("ERROR!")
 
+def gameOverCheck():
+	if player_spots[0] == 1:
+		if (player_spots[1] == 1) and (player_spots[2] == 1):
+			return False
+	return True
+			
+def gameMenu():
+	choice = int(input('Choose a spot (1-9): '))
+	if player_spots[choice - 1] != 0:
+		print('Spot in use')
+	
+	return choice
 
-printBoard()
-for x in range(1,10):
-	fillSpot('x', x)
+notGameOver = True
+
+while notGameOver:
 	printBoard()
+	
+	choice = gameMenu()
+	player_spots[choice-1] = 1
+	
+	notGameOver = gameOverCheck()
+	
