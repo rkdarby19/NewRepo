@@ -87,4 +87,5 @@ while notGameOver:
 	player_spots[choice-1] = 1
 	
 	notGameOver = gameOverCheck()
-	
+
+		
